@@ -8,12 +8,23 @@ use Abraham\TwitterOAuth\TwitterOAuth;
 $connection = new TwitterOAuth($config['consumer_key'], $config['consumer_secret'], $config['token'], $config['token_secret']);
 
 $connor = "開けろ！デトロイト市警だ！";
-$len = mb_strlen($connor);
-$sploded = array();
-while($len-- > 0) { $sploded[] = mb_substr($string, $len, 1); }
-shuffle($sploded);
-$result = join('', $sploded);
+$result = mb_str_shuffle($connor);
 
 echo $result;
 
 $statues = $connection->post("statuses/update", ["status" => $result]);
+
+function str_to_array($string, $encoding = 'UTF-8') {
+    return array_map(
+        function($index) use($string, $encoding) {
+            return mb_substr($string, $index, 1, $encoding);
+        },
+        range(0, mb_strlen($string, $encoding) - 1)
+    );
+}
+
+function mb_str_shuffle($string, $encoding = 'UTF-8') {
+    $array = str_to_array($string);
+    shuffle($array);
+    return implode('', $array);
+}
