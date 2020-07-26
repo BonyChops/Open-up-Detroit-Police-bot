@@ -14,7 +14,7 @@ $result = mb_str_shuffle($connor, $data);
 exec("ffmpeg -f concat -safe 0 -i ".__DIR__."/cache/lists.txt"." -c copy ".__DIR__."/cache/output.mp4 -y");
 
 
-$media = $connection->upload('media/upload', ['media_data' => __DIR__.'/cache/output.mp4']);
+$media = $connection->upload('media/upload', ['media' => __DIR__.'/cache/output.mp4', 'media_category' => 'tweet_video']);
 var_dump($media);
 $parameters = [
     'status' => $result,
