@@ -1,2 +1,4 @@
 config.json
 vendor/
+video_data/*
+cache/*
