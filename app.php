@@ -15,9 +15,10 @@ exec("ffmpeg -f concat -safe 0 -i ".__DIR__."/cache/lists.txt"." -c copy ".__DIR
 
 
 $media = $connection->upload('media/upload', ['media' => __DIR__.'/cache/output.mp4']);
+var_dump($media);
 $parameters = [
     'status' => $result,
-    'media_ids' => $media->media_id_string
+    'media_ids' => implode(',', [$media->media_id_string])
 ];
 $statues = $connection->post('statuses/update', $parameters);
 
@@ -37,9 +38,7 @@ function mb_str_shuffle($string, $data, $encoding = 'UTF-8')
 {
     $dir = __DIR__.'/'.$data['video_dir'];
     $array = str_to_array($string);
-    var_dump($array);
     array_shuffle($array);
-    var_dump($array);
     $fileLists = "";
     $fileLists = $fileLists . 'file ' .$dir.'/'.$data["op"] . "\n";
     foreach ($array as $key => $value){
